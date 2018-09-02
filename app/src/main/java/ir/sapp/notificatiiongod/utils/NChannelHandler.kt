@@ -17,3 +17,16 @@ fun Context.createNotificationChannel(notificationChannel: NotificationChannel) 
         throw LowAndroidVersionException()
     }
 }
+
+fun Context.generateNotificationChannel(name: String) : NotificationChannel? {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        val channel = NotificationChannel(generateChannelId(), name, NotificationManager.IMPORTANCE_DEFAULT)
+        getSystemService(NotificationManager::class.java)!!.createNotificationChannel(channel)
+        return channel
+    }
+    return null
+}
+
+fun generateChannelId(): String? {
+    return "mmm"
+}

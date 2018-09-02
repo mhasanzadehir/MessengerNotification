@@ -1,34 +1,32 @@
 package ir.sapp.notificatiiongod.utils
 
 import android.content.Context
+import android.os.Build
 import android.support.v4.app.NotificationCompat
-import ir.sapp.notificatiiongod.R
 import ir.sapp.notificatiiongod.models.notification.BaseNotification
-import android.R.attr.label
-import android.app.Notification
-import android.support.v4.app.RemoteInput
-import android.app.PendingIntent
 
 
-
-
-/**
+        /**
  *  @Author: MahdiHS
  *  @Date:   01/09/2018
  */
 
 fun Context.buildNotification(notification: BaseNotification) =
-        NotificationCompat.Builder(this, notification.channel.id)
-                .setSmallIcon(notification.smallIcon)
-                .setContentTitle(notification.title)
-                .setContentText("")
-//                .setStyle(NotificationCompat.BigTextStyle()
-//                        .bigText("Much longer text that cannot fit one line..."))
-//                .setContentIntent(pendingIntent)
-//                .addAction(R.drawable.ic_snooze, getString(R.string.snooze),
-//                        snoozePendingIntent);
-                .addAction(generateReplyAction(this))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT).build()!!
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        NotificationCompat.Builder(this, notification.channel!!.id)
+                                .setSmallIcon(notification.smallIcon)
+                                .setContentTitle(notification.title)
+                                .setContentText("")
+                                .setStyle(NotificationCompat.BigTextStyle()
+                                        .bigText("Much longer text that cannot fit one line..."))
+                //                .setContentIntent(pendingIntent)
+                //                .addAction(R.drawable.ic_snooze, getString(R.string.snooze),
+                //                        snoozePendingIntent);
+                //                .addAction(generateReplyAction(this))
+                                .setPriority(NotificationCompat.PRIORITY_DEFAULT).build()!!
+                } else {
+                        TODO("VERSION.SDK_INT < O")
+                }
 
 
 //var notification = Notification.Builder(this, CHANNEL_ID)
@@ -44,19 +42,20 @@ fun Context.buildNotification(notification: BaseNotification) =
 //addHistoricMessage()
 private const val KEY_TEXT_REPLY = "key_text_reply"
 
-fun generateReplyAction(context: Context) : NotificationCompat.Action{
-
-    val remoteInput = RemoteInput.Builder(KEY_TEXT_REPLY)
-            .setLabel("REPLY")
-            .build()
-
-    val replyPendingIntent = PendingIntent.getBroadcast(context,
-            /*null*/,
-            /*null*/,
-            PendingIntent.FLAG_UPDATE_CURRENT)
-
-    return NotificationCompat.Action.Builder(R.drawable.ic_reply_icon,
-            "REPLY", replyPendingIntent)
-            .addRemoteInput(remoteInput)
-            .build()
-}
+//fun generateReplyAction(context: Context) : NotificationCompat.Action{
+//    return NotificationCompat.Action()
+//
+//    val remoteInput = RemoteInput.Builder(KEY_TEXT_REPLY)
+//            .setLabel("REPLY")
+//            .build()
+//
+//    val replyPendingIntent = PendingIntent.getBroadcast(context,
+//            /*null*/,
+//            /*null*/,
+//            PendingIntent.FLAG_UPDATE_CURRENT)
+//
+//    return NotificationCompat.Action.Builder(R.drawable.ic_reply_icon,
+//            "REPLY", replyPendingIntent)
+//            .addRemoteInput(remoteInput)
+//            .build()
+//}
