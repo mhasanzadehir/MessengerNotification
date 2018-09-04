@@ -1,8 +1,11 @@
 package ir.sapp.notificatiiongod
 
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import ir.sapp.notificatiiongod.models.notification.BaseNotification
+import ir.sapp.notificatiiongod.utils.buildBitmap
 import ir.sapp.notificatiiongod.utils.generateNotificationChannel
 import ir.sapp.notificatiiongod.utils.monitorNotification
 
@@ -12,7 +15,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val base = BaseNotification(R.mipmap.ic_launcher, "Mahdi Hasanzadeh", generateNotificationChannel("m"))
+    }
+
+    fun test(view: View){
+        val base = BaseNotification("Mahdi Hasanzadeh", buildBitmap(Uri.parse("2")) , generateNotificationChannel("m"))
         monitorNotification(base)
     }
+
 }

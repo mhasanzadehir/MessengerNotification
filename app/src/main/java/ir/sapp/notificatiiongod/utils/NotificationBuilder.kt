@@ -1,32 +1,36 @@
 package ir.sapp.notificatiiongod.utils
 
+import android.app.Notification
 import android.content.Context
-import android.os.Build
 import android.support.v4.app.NotificationCompat
+import com.bumptech.glide.Glide
+import ir.sapp.notificatiiongod.R
 import ir.sapp.notificatiiongod.models.notification.BaseNotification
 
 
-        /**
+/**
  *  @Author: MahdiHS
  *  @Date:   01/09/2018
  */
 
-fun Context.buildNotification(notification: BaseNotification) =
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        NotificationCompat.Builder(this, notification.channel!!.id)
-                                .setSmallIcon(notification.smallIcon)
-                                .setContentTitle(notification.title)
-                                .setContentText("")
-                                .setStyle(NotificationCompat.BigTextStyle()
-                                        .bigText("Much longer text that cannot fit one line..."))
+fun Context.buildNotification(notification: BaseNotification) : Notification {
+    val builder = if(notificationChannelSupport())
+        NotificationCompat.Builder(this, notification.channel!!.id)
+    else
+        NotificationCompat.Builder(this)
+
+        return builder
+                .setSmallIcon(R.mipmap.ic_notification_logo)
+                .setLargeIcon(notification.image)
+                .setContentTitle(notification.title)
+                .setColor(getColor(R.color.colorSoroush))
+                .setContentText("")
                 //                .setContentIntent(pendingIntent)
                 //                .addAction(R.drawable.ic_snooze, getString(R.string.snooze),
                 //                        snoozePendingIntent);
                 //                .addAction(generateReplyAction(this))
-                                .setPriority(NotificationCompat.PRIORITY_DEFAULT).build()!!
-                } else {
-                        TODO("VERSION.SDK_INT < O")
-                }
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT).build()!!
+}
 
 
 //var notification = Notification.Builder(this, CHANNEL_ID)
