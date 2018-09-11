@@ -1,6 +1,5 @@
 package ir.sapp.notificatiiongod.models.notification
 
-import android.app.NotificationChannel
 import android.graphics.Bitmap
 
 
@@ -8,6 +7,7 @@ import android.graphics.Bitmap
  *  @Author: MahdiHS
  *  @Date:   01/09/2018
  */
-open class BaseNotification(val title: String,
-                            val image : Bitmap,
-                            val channel: NotificationChannel?)
+open class BaseNotification(val id: Int,
+                            val title: String,
+                            val text: String,
+                            val image : Bitmap?)
